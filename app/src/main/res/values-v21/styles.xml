@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">#f2d99a</item>
+        <item name="android:progressBackgroundTint">#efb033</item>
+    </style>
+</resources>

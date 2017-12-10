@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
@@ -120,10 +121,9 @@ public class LoginActivity extends AppCompatActivity {
                 showProgress(false);
 
                 if (task.isSuccessful()) {
-                    //TODO start new intent
-                   /* startActivity(new Intent(LoginActivity.this,
-                            PostsActivity.class));
-                            */
+
+                   startActivity(new Intent(LoginActivity.this,
+                            NewUserActivity.class));
 
                 } else {
                     Toast.makeText(LoginActivity.this,
@@ -155,10 +155,9 @@ public class LoginActivity extends AppCompatActivity {
                     fbUser.updateProfile(new UserProfileChangeRequest.Builder().
                             setDisplayName(usernameFromEmail(fbUser.getEmail())).build());
 
-                    //TODO start new intent
-                    /*startActivity(new Intent(LoginActivity.this,
-                            PostsActivity.class));
-                            */
+                    startActivity(new Intent(LoginActivity.this,
+                            NewUserActivity.class));
+
                     Toast.makeText(LoginActivity.this, "Registration ok", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(),
