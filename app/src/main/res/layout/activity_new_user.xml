@@ -17,7 +17,7 @@
         android:padding="10dp"
         android:indeterminate="false"
         android:max="100"
-        android:progress="20"/>
+        android:progress="33"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
