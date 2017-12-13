@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
 
                    startActivity(new Intent(LoginActivity.this,
-                            NewUserActivity.class));
+                            MainActivity.class));
 
                 } else {
                     Toast.makeText(LoginActivity.this,

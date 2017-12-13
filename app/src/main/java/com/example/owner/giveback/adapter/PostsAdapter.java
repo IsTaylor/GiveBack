@@ -10,8 +10,12 @@ import android.widget.TextView;
 
 import com.example.owner.giveback.R;
 import com.example.owner.giveback.data.Post;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     private List<Post> postList;
     private List<String> postKeys;
     private String uId;
+    private Button btnJoin;
     private int lastPosition = -1;
     private DatabaseReference postsRef;
 
@@ -39,6 +44,27 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         postKeys = new ArrayList<String>();
 
         postsRef = FirebaseDatabase.getInstance().getReference();
+
+    }
+
+    private void checkAdmin(){
+        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        postsRef.child("my_app_user").child(userId).child("admin").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean value = (boolean) dataSnapshot.getValue();
+                if(!value) {
+                    btnJoin.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -58,6 +84,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         holder.tvAuthor.setText(post.getAuthor());
         holder.tvTitle.setText(post.getTitle());
         holder.tvBody.setText(post.getBody());
+        btnJoin = holder.btnJoin;
+
 
         if (!uId.equals(post.getUserId())){
             holder.btnDelete.setVisibility(View.INVISIBLE);
@@ -106,6 +134,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         public TextView tvTitle;
         public TextView tvBody;
         public Button btnDelete;
+        public Button btnJoin;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -114,6 +143,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvBody = itemView.findViewById(R.id.tvBody);
             btnDelete = itemView.findViewById(R.id.btnDelete);
+            btnJoin = itemView.findViewById(R.id.btnJoin);
         }
     }
 

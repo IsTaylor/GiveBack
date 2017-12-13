@@ -34,6 +34,8 @@ public class ThirdFragment extends Fragment {
         NewUserActivity activity = (NewUserActivity) getActivity();
         etName.setText(activity.getUserName());
         cbAdmin.setChecked(activity.isAdmin());
+        adminChangedListener();
+        nameChangeListener();
         return v;
     }
 
@@ -48,6 +50,34 @@ public class ThirdFragment extends Fragment {
         f.setArguments(b);
 
         return f;
+    }
+
+    private void adminChangedListener() {
+        cbAdmin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                ((NewUserActivity)getActivity()).cbOnChanged(b);
+            }
+        });
+    }
+
+    private void nameChangeListener() {
+        etName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                ((NewUserActivity)getActivity()).fragOneChanged(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
 }

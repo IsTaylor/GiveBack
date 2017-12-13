@@ -1,10 +1,12 @@
 package com.example.owner.giveback;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
@@ -15,6 +17,8 @@ import com.example.owner.giveback.data.userData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class NewUserActivity extends AppCompatActivity {
+
 
     ViewPager mPager;
     ProgressBar progress;
@@ -34,6 +39,7 @@ public class NewUserActivity extends AppCompatActivity {
     boolean userAdmin;
 
     private DatabaseReference mDatabase;
+    FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,7 @@ public class NewUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_user);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
         progress = (ProgressBar) findViewById(R.id.progressBar);
@@ -70,6 +77,8 @@ public class NewUserActivity extends AppCompatActivity {
             }
 
         });
+
+
     }
 
     private void writeNewUser() {
@@ -84,6 +93,22 @@ public class NewUserActivity extends AppCompatActivity {
                     }
                 });
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .build();
+
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+
+                        }
+                    }
+                });
+
     }
 
 
@@ -93,6 +118,20 @@ public class NewUserActivity extends AppCompatActivity {
 
     public void fragOneChanged(String text) {
         this.name = text;
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(text)
+                .build();
+
+        mUser.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+
+                        }
+                    }
+                });
     }
 
 
