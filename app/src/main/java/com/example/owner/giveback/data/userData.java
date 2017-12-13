@@ -6,7 +6,6 @@ package com.example.owner.giveback.data;
 
 public class userData {
 
-    private String userID;
     private String name;
     private boolean admin;
 
@@ -14,18 +13,9 @@ public class userData {
 
     }
 
-    public userData(String userID, String name, boolean admin) {
-        this.userID = userID;
+    public userData(String name, boolean admin) {
         this.name = name;
         this.admin = admin;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
     }
 
     public String getName() {

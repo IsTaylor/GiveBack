@@ -5,26 +5,50 @@
     tools:context="com.example.owner.giveback.newUserFragments.ThirdFragment">
 
 
-
-
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Review your Profile"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/name_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/tvTitle">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username (This is how other users will see you)"/>
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/cbAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_layout"
+        android:hint="Admin" />
 
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn"
-        android:src="@drawable/icons8_right_50"
-        android:tint="@color/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
-        android:onClick="jumpToPageDone"/>
+        android:onClick="jumpToPageDone"
+        android:src="@drawable/icons8_right_50"
+        android:tint="@color/colorPrimary" />
 
 </RelativeLayout>

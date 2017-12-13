@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.owner.giveback.NewUserActivity;
 import com.example.owner.giveback.newUserFragments.FirstFragment;
 import com.example.owner.giveback.newUserFragments.SecondFragment;
 import com.example.owner.giveback.newUserFragments.ThirdFragment;

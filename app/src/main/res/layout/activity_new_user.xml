@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#c5e4f2"
     tools:context="com.example.owner.giveback.NewUserActivity">
 
     <ProgressBar
