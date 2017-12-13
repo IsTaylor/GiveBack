@@ -1,5 +1,6 @@
 package com.example.owner.giveback;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,6 +53,9 @@ public class CreatePostActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(CreatePostActivity.this, "Success",
                                     Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(CreatePostActivity.this,
+                                    MainActivity.class);
+                            startActivity(intent);
                         } else {
                             Toast.makeText(CreatePostActivity.this,
                                     "Error: " + task.getException().getMessage(),

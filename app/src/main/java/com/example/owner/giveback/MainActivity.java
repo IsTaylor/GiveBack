@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setLayoutManager(layoutManager);
 
 
+
         initPostsListener();
 
 
@@ -97,11 +98,14 @@ public class MainActivity extends AppCompatActivity
                 if(value) {
                     fab.setVisibility(View.VISIBLE);
                 }
+
                 adapter = new PostsAdapter(MainActivity.this,
                         FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                        FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),
                         value
                 );
                 recyclerView.setAdapter(adapter);
+
             }
 
             @Override

@@ -1,5 +1,9 @@
 package com.example.owner.giveback.data;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by owner on 12/11/17.
  */
@@ -10,6 +14,7 @@ public class Post {
     private String author;
     private String title;
     private String description;
+    private Map<String, String> usersJoined;
 
     public Post() {
     }
@@ -19,6 +24,7 @@ public class Post {
         this.author = author;
         this.title = title;
         this.description = description;
+        usersJoined = new HashMap<>();
     }
 
     public String getUserId() {
@@ -52,4 +58,13 @@ public class Post {
     public void setBody(String body) {
         this.description = body;
     }
+
+    public Map<String, String> getUsersJoined() {
+        return usersJoined;
+    }
+
+    public void setUsersJoined(Map<String, String> usersJoined) {
+        this.usersJoined = usersJoined;
+    }
+
 }

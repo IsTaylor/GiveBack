@@ -18,7 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by owner on 12/12/17.
@@ -31,39 +33,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     private List<Post> postList;
     private List<String> postKeys;
     private String uId;
-    private Button btnJoin;
+    private String userName;
+    private boolean isAdmin;
     private int lastPosition = -1;
     private DatabaseReference postsRef;
 
-    public PostsAdapter(Context context, String uId, boolean isAdmin){
+    public PostsAdapter(Context context, String uId, String userName, boolean isAdmin){
 
         this.context = context;
         this.uId = uId;
+        this.isAdmin = isAdmin;
+        this.userName = userName;
 
         postList = new ArrayList<Post>();
         postKeys = new ArrayList<String>();
 
         postsRef = FirebaseDatabase.getInstance().getReference();
-
-    }
-
-    private void checkAdmin(){
-        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        postsRef.child("my_app_user").child(userId).child("admin").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean value = (boolean) dataSnapshot.getValue();
-                if(!value) {
-                    btnJoin.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
     }
 
@@ -84,8 +69,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         holder.tvAuthor.setText(post.getAuthor());
         holder.tvTitle.setText(post.getTitle());
         holder.tvBody.setText(post.getBody());
-        btnJoin = holder.btnJoin;
-
+        if(!isAdmin){
+            holder.btnJoin.setVisibility(View.VISIBLE);
+        }
 
         if (!uId.equals(post.getUserId())){
             holder.btnDelete.setVisibility(View.INVISIBLE);
@@ -95,6 +81,26 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 removePost(holder.getAdapterPosition());
+            }
+        });
+
+        holder.btnJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addUser(holder.getAdapterPosition());
+                //updateEventList(holder.getAdapterPosition());
+                holder.btnJoin.setVisibility(View.INVISIBLE);
+                holder.btnLeave.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.btnLeave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeUser(holder.getAdapterPosition());
+                //removeEvent
+                holder.btnLeave.setVisibility(View.INVISIBLE);
+                holder.btnJoin.setVisibility(View.VISIBLE);
             }
         });
 
@@ -109,6 +115,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         postList.add(post);
         postKeys.add(key);
         notifyDataSetChanged();
+    }
+
+    public void addUser(int index){
+        Map<String, Object> update = new HashMap<>();
+        update.put(uId, userName);
+        postsRef.child("posts").child(postKeys.get(index)).child("usersJoined").updateChildren(update);
+    }
+
+
+
+    public void removeUser(int index){
+        postsRef.child("posts").child(postKeys.get(index)).child("usersJoined").child(uId).removeValue();
     }
 
     public void removePost(int index) {
@@ -135,6 +153,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         public TextView tvBody;
         public Button btnDelete;
         public Button btnJoin;
+        public Button btnLeave;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -144,6 +163,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             tvBody = itemView.findViewById(R.id.tvBody);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             btnJoin = itemView.findViewById(R.id.btnJoin);
+            btnLeave = itemView.findViewById(R.id.btnLeave);
         }
     }
 
