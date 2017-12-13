@@ -35,7 +35,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     private int lastPosition = -1;
     private DatabaseReference postsRef;
 
-    public PostsAdapter(Context context, String uId){
+    public PostsAdapter(Context context, String uId, boolean isAdmin){
 
         this.context = context;
         this.uId = uId;

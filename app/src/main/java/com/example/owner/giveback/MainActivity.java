@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     private PostsAdapter adapter;
     private DatabaseReference mDatabase;
     FloatingActionButton fab;
+    RecyclerView recyclerView;
 
 
 
@@ -72,16 +73,13 @@ public class MainActivity extends AppCompatActivity
         tvUserEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewPosts);
-        adapter = new PostsAdapter(this,
-                FirebaseAuth.getInstance().getCurrentUser().getUid()
-        );
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewPosts);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+
 
         initPostsListener();
 
@@ -99,6 +97,11 @@ public class MainActivity extends AppCompatActivity
                 if(value) {
                     fab.setVisibility(View.VISIBLE);
                 }
+                adapter = new PostsAdapter(MainActivity.this,
+                        FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                        value
+                );
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
