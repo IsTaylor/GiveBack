@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
         android:text="Review your Profile"
         android:textSize="20sp" />
 
@@ -17,23 +18,27 @@
         android:id="@+id/name_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_below="@id/tvTitle">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_marginRight="4dp"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username (This is how other users will see you)"/>
-
-        <EditText
-            android:id="@+id/etName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_marginLeft="4dp"
+            android:text= "(This is how other users will see you)"/>
 
     </LinearLayout>
 
     <CheckBox
         android:id="@+id/cbAdmin"
+        android:layout_margin="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/name_layout"
@@ -49,6 +54,6 @@
         android:layout_margin="16dp"
         android:onClick="jumpToPageDone"
         android:src="@drawable/icons8_right_50"
-        android:tint="@color/colorPrimary" />
+        android:tint="#ffffff" />
 
 </RelativeLayout>

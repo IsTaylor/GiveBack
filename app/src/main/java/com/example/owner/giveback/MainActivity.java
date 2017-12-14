@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.owner.giveback.adapter.PostsAdapter;
 import com.example.owner.giveback.data.Post;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mDatabase;
     FloatingActionButton fab;
     RecyclerView recyclerView;
+    NavigationView navigationView;
+    boolean isAdmin;
 
 
 
@@ -66,8 +69,8 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
 
         TextView tvUserEmail = navigationView.getHeaderView(0).findViewById(R.id.tvUserEmail);
         tvUserEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean value = (boolean) dataSnapshot.getValue();
+                isAdmin = value;
                 if(value) {
                     fab.setVisibility(View.VISIBLE);
                 }
@@ -105,6 +109,8 @@ public class MainActivity extends AppCompatActivity
                         value
                 );
                 recyclerView.setAdapter(adapter);
+
+                navigationView.setNavigationItemSelectedListener(MainActivity.this);
 
             }
 
@@ -176,7 +182,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
             return true;
         }
 
@@ -186,21 +192,17 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_events) {
+            if(isAdmin){
+                Intent intent = new Intent(MainActivity.this, AdminEventsActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(MainActivity.this,
+                        "This is not available right now",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -2,7 +2,7 @@
 <resources>
 
     <style name="LinearProgress" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">#f2d99a</item>
-        <item name="android:progressBackgroundTint">#efb033</item>
+        <item name="colorAccent">#FF4081</item>
+        <item name="android:progressBackgroundTint">#ff9fc1</item>
     </style>
 </resources>

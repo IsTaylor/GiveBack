@@ -31,12 +31,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
     private Context context;
     private List<Post> postList;
-    private List<String> postKeys;
+    public List<String> postKeys;
     private String uId;
     private String userName;
     private boolean isAdmin;
     private int lastPosition = -1;
     private DatabaseReference postsRef;
+    private boolean show;
 
     public PostsAdapter(Context context, String uId, String userName, boolean isAdmin){
 
@@ -88,7 +89,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 addUser(holder.getAdapterPosition());
-                //updateEventList(holder.getAdapterPosition());
+                updateEventList(holder.getAdapterPosition());
                 holder.btnJoin.setVisibility(View.INVISIBLE);
                 holder.btnLeave.setVisibility(View.VISIBLE);
             }
@@ -98,7 +99,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 removeUser(holder.getAdapterPosition());
-                //removeEvent
+                removeEvent(holder.getAdapterPosition());
                 holder.btnLeave.setVisibility(View.INVISIBLE);
                 holder.btnJoin.setVisibility(View.VISIBLE);
             }
@@ -123,7 +124,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         postsRef.child("posts").child(postKeys.get(index)).child("usersJoined").updateChildren(update);
     }
 
+    public void updateEventList(int index){
+        Map<String, Object> update = new HashMap<>();
+        update.put(postKeys.get(index), 1);
+        postsRef.child("my_app_user").child(uId).child("eventsJoined").updateChildren(update);
+    }
 
+    public void removeEvent(int index){
+        postsRef.child("my_app_user").child(uId).child("eventsJoined").child(postKeys.get(index)).removeValue();
+    }
 
     public void removeUser(int index){
         postsRef.child("posts").child(postKeys.get(index)).child("usersJoined").child(uId).removeValue();

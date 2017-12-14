@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
         android:text="Let's get you started"
         android:textSize="20sp"/>
 
@@ -16,20 +17,23 @@
         android:id="@+id/etName"
         android:layout_below="@+id/tvTitle"
         android:layout_width="wrap_content"
+        android:layout_margin="16dp"
         android:layout_height="wrap_content"
         android:hint="What's your name?"/>
 
     <CheckBox
         android:id="@+id/cbAdmin"
         android:layout_below="@+id/etName"
+        android:layout_margin="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="16sp"
         android:hint="Are you an Admin?"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn"
         android:src="@drawable/icons8_right_50"
-        android:tint="@color/colorPrimary"
+        android:tint="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
